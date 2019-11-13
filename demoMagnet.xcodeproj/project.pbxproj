@@ -14,6 +14,7 @@
 		991806FD2376D98500222F0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 991806FC2376D98500222F0D /* Assets.xcassets */; };
 		991807002376D98500222F0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 991806FE2376D98500222F0D /* LaunchScreen.storyboard */; };
 		9918070B2376D98500222F0D /* demoMagnetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9918070A2376D98500222F0D /* demoMagnetTests.swift */; };
+		991807172379285600222F0D /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 991807162379285600222F0D /* CoreMotion.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		991807062376D98500222F0D /* demoMagnetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = demoMagnetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9918070A2376D98500222F0D /* demoMagnetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = demoMagnetTests.swift; sourceTree = "<group>"; };
 		9918070C2376D98500222F0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		991807162379285600222F0D /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				991807172379285600222F0D /* CoreMotion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +67,7 @@
 				991806F22376D98300222F0D /* demoMagnet */,
 				991807092376D98500222F0D /* demoMagnetTests */,
 				991806F12376D98300222F0D /* Products */,
+				991807152379285600222F0D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,6 +101,14 @@
 				9918070C2376D98500222F0D /* Info.plist */,
 			);
 			path = demoMagnetTests;
+			sourceTree = "<group>";
+		};
+		991807152379285600222F0D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				991807162379285600222F0D /* CoreMotion.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -363,7 +375,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = X49NNQUX2Q;
 				INFOPLIST_FILE = demoMagnet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -371,7 +385,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nito.demoMagnet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -380,7 +394,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = X49NNQUX2Q;
 				INFOPLIST_FILE = demoMagnet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -388,7 +404,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nito.demoMagnet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
