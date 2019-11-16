@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreMotion
+import simd
+
 
 class ViewController: UIViewController {
     
@@ -17,16 +19,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var intervalLabel: UILabel!
     @IBOutlet weak var seekBar: UISlider!
     @IBOutlet weak var sensingButton: UIButton!
+    @IBOutlet weak var csvFileManageButton: UIButton!
     
     //インスタンス生成
     let motionManager = CMMotionManager()
+    let csvManager = csvSaveDataManager()
+    let formatter: DateFormatter = DateFormatter()
     
-//    let magdata: CMMagnetometerData = CMMagnetometerData()
-    
-    // CMMagnetometer
-    var mag_x: Double = 0.0
-    var mag_y: Double = 0.0
-    var mag_z: Double = 0.0
     
     // sensingしているかどうか
     private var isSensing = false
@@ -34,17 +33,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        秒単位で計測している
         motionManager.magnetometerUpdateInterval = 0.1
-        
-//        // isMagnetometerAvailableは端末に磁気センサーがあるかどうかを確認している。
-//        if motionManager.isMagnetometerAvailable && motionManager.isMagnetometerActive {
-//            let handler: CMMagnetometerHandler = {(magnetoData: CMMagnetometerData?, error:Error?) -> Void in
-//                self.measureMagnetoData(magnetoData:magnetoData)
-//            }
-//            motionManager.startMagnetometerUpdates(to: OperationQueue.main, withHandler: handler)
-//        }
+
+        //記録計測の開始
+//        startSensorUpdates(motionManager.magnetometerUpdateInterval)
         // pushされるとsensingButtonの実行
-        sensingButton.addTarget(self, action: #selector(self.pushButton(_:)), for: UIControl.Event.touchUpInside)
+//        sensingButton.addTarget(self, action: #selector(self.pushButton(_:)), for: UIControl.Event.touchUpInside)
+        
+        // pushされるとcsvファイルを作成する。
+        csvFileManageButton.addTarget(self, action: #selector(self.recordingCsvActive(_:)), for: UIControl.Event.touchUpInside)
     }
     
     // sensingの開始を行う。
@@ -61,6 +59,73 @@ class ViewController: UIViewController {
 //        print(isSensing)
     }
     
+    // sensingの開始を行う。計測結果をcsvファイルとして出力できるようにする。
+    // pushButton同様に切り替えを行い、記録に開始を行う。
+    @objc func recordingCsvActive(_ sender: Any) {
+        if csvManager.isRecording {
+            csvManager.stopRecording()
+            // save csvfile
+            stopSensing()
+            formatter.dateFormat = "yyyy-MM-dd_HH:mm:ss"
+            let dateText = formatter.string(from: Date())
+            showSaveCsvFileAlert(fileName: dateText)
+            
+            sensingButton.isEnabled = true
+            csvFileManageButton.setTitle("Start", for: .normal)
+        } else {
+            csvManager.startRecording()
+            startSensing()
+//            csvFileManageButton.isEnabled = false
+            sensingButton.isEnabled = false
+            csvFileManageButton.setTitle("Stop", for: .normal)
+            
+        }
+    }
+    
+    func showSaveCsvFileAlert(fileName: String) {
+        let alertController = UIAlertController(title: "Save CSV file", message: "Enter file name to add.", preferredStyle: .alert)
+        let defaultAction:UIAlertAction = UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction!) -> Void in
+            let textField = alertController.textFields![0] as UITextField
+            self.csvManager.saveSensorDataToCsv(fileName: textField.text!)
+        })
+        
+        let cancelAction:UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {(action:UIAlertAction!) -> Void in
+            self.showDeleteRecordedDataAlert(fileName: fileName)
+        })
+        
+        alertController.addTextField{(textField:UITextField!) -> Void in
+            alertController.textFields![0].text = fileName
+        }
+        alertController.addAction(defaultAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func showDeleteRecordedDataAlert(fileName:String){
+        let alertController = UIAlertController(title: "Delete recorded data", message: "Do you delete recorded data?", preferredStyle: .alert)
+        
+        let defaultAction:UIAlertAction =
+            UIAlertAction(title: "OK",
+                          style: .default,
+                          handler:{
+                            (action:UIAlertAction!) -> Void in
+                            // delete recorded data
+            })
+        let cancelAction:UIAlertAction =
+            UIAlertAction(title: "Cancel",
+                          style: .cancel,
+                          handler:{
+                            (action:UIAlertAction!) -> Void in
+                            self.showSaveCsvFileAlert(fileName: fileName)
+            })
+        
+        alertController.addAction(defaultAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
     // センシングの開始。pushButtonで呼び出し
     func startSensing() {
 //        motionManager.startMagnetometerUpdates(to: OperationQueue.current!, withHandler: {(motion:CMDeviceMotion?, error: Error?) in
@@ -72,7 +137,6 @@ class ViewController: UIViewController {
             })
         }
 //        print("dekiteru")
-//        motionManager.startMagnetometerUpdates(to: OperationQueue.main, withHandler:handler)
     }
     
     // センシングの停止。pushButtonで呼び出し
@@ -84,21 +148,7 @@ class ViewController: UIViewController {
     }
     
     
-//    func showMagnetoData(magnetoData: CMMagnetometerData?, error: NSError?) {
-//        if let data = magnetoData {
-//            var x = data.magneticField.x
-//            var y = data.magneticField.y
-//            var z = data.magneticField.z
-//
-//            x = round(x*100)/100
-//            y = round(y*100)/100
-//            z = round(z*100)/100
-//
-//            xLabel.text = String(x)
-//            yLabel.text = String(y)
-//            zLabel.text = String(z)
-//        }
-//    }
+
 
     func measureMagnetoData(magnetoData: CMMagnetometerData) {
         
@@ -112,29 +162,29 @@ class ViewController: UIViewController {
 //            mag_z = data.magneticField.z
 //        }
         
-        print(magnetoData.magneticField.x)
-        print(magnetoData.magneticField.y)
-        print(magnetoData.magneticField.z)
+//        print(magnetoData.magneticField.x)
+//        print(magnetoData.magneticField.y)
+//        print(magnetoData.magneticField.z)
         
 
 //        print("タイプ確認")
 //        ダブル型の返り値でした。
 //        print(type(of: magnetoData.magneticField.x))
-
-        print("_____________________")
         xLabel.text = String(magnetoData.magneticField.x)
         yLabel.text = String(magnetoData.magneticField.y)
         zLabel.text = String(magnetoData.magneticField.z)
+        
+        if csvManager.isRecording {
+            formatter.dateFormat = "MM-dd_HH:mm:ss:SSS"
+            var text = ""
+            text += formatter.string(from: Date()) + ","
+            text += String(magnetoData.magneticField.x) + ","
+            text += String(magnetoData.magneticField.y) + ","
+            text += String(magnetoData.magneticField.z)
+            
+            csvManager.addText(addText: text)
+        }
     }
-    
-
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        let touch = touches.first!
-//        let location = touch.location(in: self.imageView)
-//
-//        let locationX = round(location.x * 10000) / 10000
-//        let locationY = round(location.y * 10000) / 10000
-//    }
 
 }
 

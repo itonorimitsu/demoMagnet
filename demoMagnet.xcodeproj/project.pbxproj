@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		99101759237D2BCC00864D08 /* csvDataSaveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99101758237D2BCC00864D08 /* csvDataSaveManager.swift */; };
 		991806F42376D98300222F0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991806F32376D98300222F0D /* AppDelegate.swift */; };
 		991806F62376D98300222F0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991806F52376D98300222F0D /* SceneDelegate.swift */; };
 		991806F82376D98300222F0D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991806F72376D98300222F0D /* ViewController.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		99101758237D2BCC00864D08 /* csvDataSaveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csvDataSaveManager.swift; sourceTree = "<group>"; };
 		991806F02376D98300222F0D /* demoMagnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demoMagnet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		991806F32376D98300222F0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		991806F52376D98300222F0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				991806F32376D98300222F0D /* AppDelegate.swift */,
 				991806F52376D98300222F0D /* SceneDelegate.swift */,
 				991806F72376D98300222F0D /* ViewController.swift */,
+				99101758237D2BCC00864D08 /* csvDataSaveManager.swift */,
 				991806F92376D98300222F0D /* Main.storyboard */,
 				991806FC2376D98500222F0D /* Assets.xcassets */,
 				991806FE2376D98500222F0D /* LaunchScreen.storyboard */,
@@ -215,6 +218,7 @@
 				991806F82376D98300222F0D /* ViewController.swift in Sources */,
 				991806F42376D98300222F0D /* AppDelegate.swift in Sources */,
 				991806F62376D98300222F0D /* SceneDelegate.swift in Sources */,
+				99101759237D2BCC00864D08 /* csvDataSaveManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
