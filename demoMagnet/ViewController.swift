@@ -16,10 +16,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var xLabel: UILabel!
     @IBOutlet weak var yLabel: UILabel!
     @IBOutlet weak var zLabel: UILabel!
-    @IBOutlet weak var intervalLabel: UILabel!
-    @IBOutlet weak var seekBar: UISlider!
+//    @IBOutlet weak var intervalLabel: UILabel!
+//    @IBOutlet weak var seekBar: UISlider!
     @IBOutlet weak var sensingButton: UIButton!
     @IBOutlet weak var csvFileManageButton: UIButton!
+    @IBOutlet weak var csvFileChange: UIButton!
     
     //インスタンス生成
     let motionManager = CMMotionManager()
@@ -38,11 +39,13 @@ class ViewController: UIViewController {
 
         //記録計測の開始
 //        startSensorUpdates(motionManager.magnetometerUpdateInterval)
-        // pushされるとsensingButtonの実行
-//        sensingButton.addTarget(self, action: #selector(self.pushButton(_:)), for: UIControl.Event.touchUpInside)
+//         pushされるとsensingButtonの実行
+        sensingButton.addTarget(self, action: #selector(self.pushButton(_:)), for: UIControl.Event.touchUpInside)
         
         // pushされるとcsvファイルを作成する。
         csvFileManageButton.addTarget(self, action: #selector(self.recordingCsvActive(_:)), for: UIControl.Event.touchUpInside)
+        
+        csvFileChange.addTarget(self, action: #selector(self.csvFileManagementButtonAction(_:)), for: UIControl.Event.touchUpInside)
     }
     
     // sensingの開始を行う。
@@ -66,7 +69,7 @@ class ViewController: UIViewController {
             csvManager.stopRecording()
             // save csvfile
             stopSensing()
-            formatter.dateFormat = "yyyy-MM-dd_HH:mm:ss"
+            formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
             let dateText = formatter.string(from: Date())
             showSaveCsvFileAlert(fileName: dateText)
             
@@ -80,6 +83,14 @@ class ViewController: UIViewController {
             csvFileManageButton.setTitle("Stop", for: .normal)
             
         }
+    }
+    
+    //// ここの機能を実装するーーーー
+    @objc func csvFileManagementButtonAction(_ sender: Any) {
+        let FileManagerViewController = self.storyboard?.instantiateViewController(withIdentifier: "csvFileManagementViewController") as! csvFileManagerViewController
+        FileManagerViewController.modalPresentationStyle = .overCurrentContext
+        FileManagerViewController.modalTransitionStyle = .crossDissolve
+        self.present(FileManagerViewController, animated: true, completion: nil)
     }
     
     func showSaveCsvFileAlert(fileName: String) {

@@ -17,7 +17,7 @@ class csvSaveDataManager {
     var format = DateFormatter()
     
     init() {
-        format.dateFormat = "YYYY-MM-dd__HH:mm:ss:SSS"
+        format.dateFormat = "YYYY-MM-dd_HH-mm-ss-SSS"
     }
     
     func startRecording() {
