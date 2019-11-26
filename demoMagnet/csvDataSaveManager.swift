@@ -11,7 +11,7 @@ import Foundation
 class csvSaveDataManager {
     
     private(set) var isRecording = false
-    private let headerText = "timestamp, magnetoFirldX, magnetoFieldY, magnetoFieldZ"
+    private let headerText = "timestamp, magnetoFirldX, magnetoFieldY, magnetoFieldZ, angle"
     private var recordText = ""
     
     var format = DateFormatter()

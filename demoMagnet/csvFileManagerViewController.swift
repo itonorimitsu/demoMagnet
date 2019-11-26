@@ -53,7 +53,7 @@ class csvFileManagerViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("csvファイルのカウント数")
+//        print("csvファイルのカウント数")
         return csvFileNames.count
     }
     
@@ -62,7 +62,7 @@ class csvFileManagerViewController: UIViewController, UITableViewDelegate, UITab
         let csvFileName = csvFileNames[indexPath.row]
         cell.textLabel!.text = String(csvFileName)
         
-        print("cell返し")
+//        print("cell返し")
         return cell
     }
     
@@ -74,7 +74,7 @@ class csvFileManagerViewController: UIViewController, UITableViewDelegate, UITab
             tableView.deleteRows(at: [indexPath], with: .fade)
             
             tableView.reloadData()
-            print("tableViewが帰ってくる")
+//            print("tableViewが帰ってくる")
             
         }
     }

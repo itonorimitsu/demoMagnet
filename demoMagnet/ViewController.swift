@@ -9,9 +9,10 @@
 import UIKit
 import CoreMotion
 import simd
+import CoreLocation
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var xLabel: UILabel!
     @IBOutlet weak var yLabel: UILabel!
@@ -21,11 +22,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var sensingButton: UIButton!
     @IBOutlet weak var csvFileManageButton: UIButton!
     @IBOutlet weak var csvFileChange: UIButton!
+    @IBOutlet weak var angleLabel: UILabel!
     
     //インスタンス生成
     let motionManager = CMMotionManager()
     let csvManager = csvSaveDataManager()
     let formatter: DateFormatter = DateFormatter()
+    let myLocationManager = CLLocationManager()
+    
+    
     
     
     // sensingしているかどうか
@@ -34,8 +39,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        myLocationManager.delegate = self
+        myLocationManager.startUpdatingHeading()
+        
 //        秒単位で計測している
-        motionManager.magnetometerUpdateInterval = 0.1
+        motionManager.magnetometerUpdateInterval = 0.01
 
         //記録計測の開始
 //        startSensorUpdates(motionManager.magnetometerUpdateInterval)
@@ -155,10 +163,23 @@ class ViewController: UIViewController {
         if motionManager.isDeviceMotionAvailable {
             motionManager.stopMagnetometerUpdates()
         }
-//        print("止まるんじゃねえぞ")
     }
     
+    func calcAngle(x: Double, y: Double) -> Int {
+        var angle = 0.0
+        
+        //あれ?できてる？？
+        angle = atan2(x, y) * 180 / Double.pi
+        // 角度45になる
+//        angle = atan(1) * 180 / Double.pi
+        let angleInt = Int(angle)
+        
+        return angleInt
+    }
     
+    func locationManager(_ manager:CLLocationManager, didUpdateHeading newHeading:CLHeading) {
+//        print("方角: " + String(newHeading.magneticHeading))
+    }
 
 
     func measureMagnetoData(magnetoData: CMMagnetometerData) {
@@ -177,6 +198,7 @@ class ViewController: UIViewController {
 //        print(magnetoData.magneticField.y)
 //        print(magnetoData.magneticField.z)
         
+        let calcedAngel = self.calcAngle(x: magnetoData.magneticField.x, y: magnetoData.magneticField.y)
 
 //        print("タイプ確認")
 //        ダブル型の返り値でした。
@@ -184,6 +206,8 @@ class ViewController: UIViewController {
         xLabel.text = String(magnetoData.magneticField.x)
         yLabel.text = String(magnetoData.magneticField.y)
         zLabel.text = String(magnetoData.magneticField.z)
+        angleLabel.text = String(calcedAngel)
+        
         
         if csvManager.isRecording {
             formatter.dateFormat = "MM-dd_HH:mm:ss:SSS"
@@ -191,7 +215,9 @@ class ViewController: UIViewController {
             text += formatter.string(from: Date()) + ","
             text += String(magnetoData.magneticField.x) + ","
             text += String(magnetoData.magneticField.y) + ","
-            text += String(magnetoData.magneticField.z)
+            text += String(magnetoData.magneticField.z) + ","
+            // 角度の計算
+            text += String(calcedAngel)
             
             csvManager.addText(addText: text)
         }

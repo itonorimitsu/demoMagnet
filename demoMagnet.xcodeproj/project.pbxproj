@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		99031939238BC429008534CE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99031938238BC429008534CE /* CoreLocation.framework */; };
 		99101759237D2BCC00864D08 /* csvDataSaveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99101758237D2BCC00864D08 /* csvDataSaveManager.swift */; };
 		9910175B237FE9F600864D08 /* csvFileManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910175A237FE9F600864D08 /* csvFileManagerViewController.swift */; };
 		991806F42376D98300222F0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991806F32376D98300222F0D /* AppDelegate.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		99031938238BC429008534CE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		99101758237D2BCC00864D08 /* csvDataSaveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csvDataSaveManager.swift; sourceTree = "<group>"; };
 		9910175A237FE9F600864D08 /* csvFileManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csvFileManagerViewController.swift; sourceTree = "<group>"; };
 		991806F02376D98300222F0D /* demoMagnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demoMagnet.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99031939238BC429008534CE /* CoreLocation.framework in Frameworks */,
 				991807172379285600222F0D /* CoreMotion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,6 +115,7 @@
 		991807152379285600222F0D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				99031938238BC429008534CE /* CoreLocation.framework */,
 				991807162379285600222F0D /* CoreMotion.framework */,
 			);
 			name = Frameworks;
